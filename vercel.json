@@ -8,5 +8,6 @@
   ],
   "routes": [
     { "src": "/(.*)", "dest": "/$1" }
-  ]
+  ],
+  "installCommand": "npm ci && chmod +x node_modules/.bin/astro"
 }
