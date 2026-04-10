@@ -1,14 +1,17 @@
 ---
 ---
-<nav class="navbar border-b border-white/10 bg-slate-950/80 py-6">
-  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4">
-    <a class="text-xl font-black tracking-[0.04em] text-white" href="/">Flight Radar</a>
-    <div class="flex items-center gap-4">
-      <ul class="flex items-center gap-6">
-        <li><a class="text-slate-300 transition hover:text-white" href="/">Home</a></li>
-        <li><a class="text-slate-300 transition hover:text-white" href="/about">About</a></li>
+<nav class="sticky top-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl py-4">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4">
+    <a class="inline-flex items-center gap-2 text-xl font-bold tracking-tight text-white hover:text-blue-400 transition" href="/">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8m0 8l-4-2m4 2l4-2" /></svg>
+      <span>Flight Radar</span>
+    </a>
+    <div class="flex items-center gap-6 ml-auto">
+      <ul class="flex items-center gap-8">
+        <li><a class="text-sm text-slate-400 hover:text-white transition" href="/">Home</a></li>
+        <li><a class="text-sm text-slate-400 hover:text-white transition" href="/about">About</a></li>
       </ul>
-      <button id="themeToggle" class="theme-button" aria-label="Toggle light and dark theme">Light</button>
+      <button id="themeToggle" class="text-sm rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-slate-300 hover:text-white hover:bg-white/10 transition font-medium" aria-label="Toggle light and dark theme">Light</button>
     </div>
   </div>
 </nav>
