@@ -1,13 +1,4 @@
 {
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "dist" }
-    }
-  ],
-  "routes": [
-    { "src": "/(.*)", "dest": "/$1" }
-  ],
-  "installCommand": "npm ci && chmod +x node_modules/.bin/astro"
+  "buildCommand": "npm ci && npm run build",
+  "outputDirectory": "dist"
 }
