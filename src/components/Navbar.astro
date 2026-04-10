@@ -1,35 +1,11 @@
 ---
 ---
-<nav>
-  <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="/search">Search</a></li>
-    <li><a href="/about">About</a></li>
-  </ul>
-
-  <style>
-    nav {
-      background-color: #444;
-      color: white;
-      padding: 0.5rem;
-    }
-
-    ul {
-      list-style: none;
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin: 0;
-      padding: 0;
-    }
-
-    a {
-      color: white;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-  </style>
+<nav class="border-b border-slate-800 bg-slate-950/80 py-6 backdrop-blur-xl">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4">
+    <a class="text-xl font-black tracking-[0.04em] text-white" href="/">Flight Radar</a>
+    <ul class="flex items-center gap-6">
+      <li><a class="text-slate-300 transition hover:text-white" href="/">Home</a></li>
+      <li><a class="text-slate-300 transition hover:text-white" href="/about">About</a></li>
+    </ul>
+  </div>
 </nav>

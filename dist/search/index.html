@@ -1,54 +1,56 @@
-<!DOCTYPE html><html data-astro-cid-dmqsi53g> <head><title>Flight Radar Dashboard</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>body{font-family:Arial,sans-serif;margin:0;padding:0;background-color:#f4f4f4}header[data-astro-cid-dmqsi53g]{background-color:#333;color:#fff;padding:1rem;text-align:center}main[data-astro-cid-dmqsi53g]{margin:0 auto;max-width:1200px}nav[data-astro-cid-5blmo7yk]{background-color:#444;color:#fff;padding:.5rem}ul[data-astro-cid-5blmo7yk]{list-style:none;display:flex;justify-content:center;gap:1rem;margin:0;padding:0}a[data-astro-cid-5blmo7yk]{color:#fff;text-decoration:none}a[data-astro-cid-5blmo7yk]:hover{text-decoration:underline}
-.page-section[data-astro-cid-ipsxrsrh]{padding:1rem}.page-heading[data-astro-cid-ipsxrsrh]{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem}.search-box[data-astro-cid-ipsxrsrh]{margin-bottom:1rem}input[data-astro-cid-ipsxrsrh][type=search]{width:100%;max-width:500px;padding:.75rem 1rem;border-radius:999px;border:1px solid #ccc;font-size:1rem}.search-status[data-astro-cid-ipsxrsrh]{margin-bottom:1rem;color:#555}.flights-grid[data-astro-cid-ipsxrsrh]{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem}.flight-card[data-astro-cid-ipsxrsrh]{border:1px solid #ccc;border-radius:8px;padding:1rem;background-color:#fff;box-shadow:0 2px 8px #0000000d}.flight-card[data-astro-cid-ipsxrsrh] h3[data-astro-cid-ipsxrsrh]{margin:0 0 .5rem}.flight-card[data-astro-cid-ipsxrsrh] p[data-astro-cid-ipsxrsrh]{margin:.25rem 0}@media(max-width:600px){.page-heading[data-astro-cid-ipsxrsrh],.search-box[data-astro-cid-ipsxrsrh]{align-items:stretch}}
-</style></head> <body data-astro-cid-dmqsi53g> <header data-astro-cid-dmqsi53g>  </header> <main data-astro-cid-dmqsi53g>  <nav data-astro-cid-5blmo7yk> <ul data-astro-cid-5blmo7yk> <li data-astro-cid-5blmo7yk><a href="/" data-astro-cid-5blmo7yk>Home</a></li> <li data-astro-cid-5blmo7yk><a href="/search" data-astro-cid-5blmo7yk>Search</a></li> <li data-astro-cid-5blmo7yk><a href="/about" data-astro-cid-5blmo7yk>About</a></li> </ul> </nav> <main data-astro-cid-ipsxrsrh> <section class="page-section" data-astro-cid-ipsxrsrh> <div class="page-heading" data-astro-cid-ipsxrsrh> <div data-astro-cid-ipsxrsrh> <h1 data-astro-cid-ipsxrsrh>Search Flights</h1> <p data-astro-cid-ipsxrsrh>Filter flights by callsign or country in real time.</p> </div> </div> <div class="search-box" data-astro-cid-ipsxrsrh> <input id="searchInput" type="search" placeholder="Search by callsign or country" data-astro-cid-ipsxrsrh> </div> <div class="search-status" id="searchStatus" data-astro-cid-ipsxrsrh>Showing 20 flights</div> <div class="flights-grid" id="flightGrid" data-astro-cid-ipsxrsrh> <div class="flight-card" data-astro-cid-ipsxrsrh> <h3 data-astro-cid-ipsxrsrh>N812NC</h3> <p data-astro-cid-ipsxrsrh>Country: United States</p> <p data-astro-cid-ipsxrsrh>Speed: 226 km/h</p> <p data-astro-cid-ipsxrsrh>Altitude: 8050 ft</p> </div><div class="flight-card" data-astro-cid-ipsxrsrh> <h3 data-astro-cid-ipsxrsrh>DAL863</h3> <p data-astro-cid-ipsxrsrh>Country: United States</p> <p data-astro-cid-ipsxrsrh>Speed: 422 km/h</p> <p data-astro-cid-ipsxrsrh>Altitude: 32050 ft</p> </div><div class="flight-card" data-astro-cid-ipsxrsrh> <h3 data-astro-cid-ipsxrsrh>OAE3939</h3> <p data-astro-cid-ipsxrsrh>Country: United States</p> <p data-astro-cid-ipsxrsrh>Speed: 325 km/h</p> <p data-astro-cid-ipsxrsrh>Altitude: 11150 ft</p> </div><div class="flight-card" data-astro-cid-ipsxrsrh> <h3 data-astro-cid-ipsxrsrh>N205FA</h3> <p data-astro-cid-ipsxrsrh>Country: United States</p> <p data-astro-cid-ipsxrsrh>Speed: 112 km/h</p> <p data-astro-cid-ipsxrsrh>Altitude: 1325 ft</p> </div><div class="flight-card" data-astro-cid-ipsxrsrh> <h3 data-astro-cid-ipsxrsrh>EDV5035</h3> <p data-astro-cid-ipsxrsrh>Country: United States</p> <p data-astro-cid-ipsxrsrh>Speed: 363 km/h</p> <p data-astro-cid-ipsxrsrh>Altitude: 15200 ft</p> </div><div class="flight-card" data-astro-cid-ipsxrsrh> <h3 data-astro-cid-ipsxrsrh>RPA5722</h3> <p data-astro-cid-ipsxrsrh>Country: United States</p> <p data-astro-cid-ipsxrsrh>Speed: 391 km/h</p> <p data-astro-cid-ipsxrsrh>Altitude: 26000 ft</p> </div><div class="flight-card" data-astro-cid-ipsxrsrh> <h3 data-astro-cid-ipsxrsrh>DAL784</h3> <p data-astro-cid-ipsxrsrh>Country: United States</p> <p data-astro-cid-ipsxrsrh>Speed: 415 km/h</p> <p data-astro-cid-ipsxrsrh>Altitude: 33950 ft</p> </div><div class="flight-card" data-astro-cid-ipsxrsrh> <h3 data-astro-cid-ipsxrsrh>RPA5844</h3> <p data-astro-cid-ipsxrsrh>Country: United States</p> <p data-astro-cid-ipsxrsrh>Speed: 322 km/h</p> <p data-astro-cid-ipsxrsrh>Altitude: 11400 ft</p> </div><div class="flight-card" data-astro-cid-ipsxrsrh> <h3 data-astro-cid-ipsxrsrh>N6206J</h3> <p data-astro-cid-ipsxrsrh>Country: United States</p> <p data-astro-cid-ipsxrsrh>Speed: 59 km/h</p> <p data-astro-cid-ipsxrsrh>Altitude: -100 ft</p> </div><div class="flight-card" data-astro-cid-ipsxrsrh> <h3 data-astro-cid-ipsxrsrh>N9155M</h3> <p data-astro-cid-ipsxrsrh>Country: United States</p> <p data-astro-cid-ipsxrsrh>Speed: 13 km/h</p> <p data-astro-cid-ipsxrsrh>Altitude:  ft</p> </div><div class="flight-card" data-astro-cid-ipsxrsrh> <h3 data-astro-cid-ipsxrsrh>PDT6088</h3> <p data-astro-cid-ipsxrsrh>Country: United States</p> <p data-astro-cid-ipsxrsrh>Speed: 1 km/h</p> <p data-astro-cid-ipsxrsrh>Altitude: -150 ft</p> </div><div class="flight-card" data-astro-cid-ipsxrsrh> <h3 data-astro-cid-ipsxrsrh>JIA5169</h3> <p data-astro-cid-ipsxrsrh>Country: United States</p> <p data-astro-cid-ipsxrsrh>Speed: 415 km/h</p> <p data-astro-cid-ipsxrsrh>Altitude: 27250 ft</p> </div><div class="flight-card" data-astro-cid-ipsxrsrh> <h3 data-astro-cid-ipsxrsrh>FDX1303</h3> <p data-astro-cid-ipsxrsrh>Country: United States</p> <p data-astro-cid-ipsxrsrh>Speed: 0 km/h</p> <p data-astro-cid-ipsxrsrh>Altitude:  ft</p> </div><div class="flight-card" data-astro-cid-ipsxrsrh> <h3 data-astro-cid-ipsxrsrh>UPS1173</h3> <p data-astro-cid-ipsxrsrh>Country: United States</p> <p data-astro-cid-ipsxrsrh>Speed: 0 km/h</p> <p data-astro-cid-ipsxrsrh>Altitude:  ft</p> </div><div class="flight-card" data-astro-cid-ipsxrsrh> <h3 data-astro-cid-ipsxrsrh>FDX1670</h3> <p data-astro-cid-ipsxrsrh>Country: United States</p> <p data-astro-cid-ipsxrsrh>Speed: 0 km/h</p> <p data-astro-cid-ipsxrsrh>Altitude:  ft</p> </div><div class="flight-card" data-astro-cid-ipsxrsrh> <h3 data-astro-cid-ipsxrsrh>N108DB</h3> <p data-astro-cid-ipsxrsrh>Country: United States</p> <p data-astro-cid-ipsxrsrh>Speed: 480 km/h</p> <p data-astro-cid-ipsxrsrh>Altitude: 34000 ft</p> </div><div class="flight-card" data-astro-cid-ipsxrsrh> <h3 data-astro-cid-ipsxrsrh>SWA1965</h3> <p data-astro-cid-ipsxrsrh>Country: United States</p> <p data-astro-cid-ipsxrsrh>Speed: 218 km/h</p> <p data-astro-cid-ipsxrsrh>Altitude: 2650 ft</p> </div><div class="flight-card" data-astro-cid-ipsxrsrh> <h3 data-astro-cid-ipsxrsrh>N249WF</h3> <p data-astro-cid-ipsxrsrh>Country: United States</p> <p data-astro-cid-ipsxrsrh>Speed: 100 km/h</p> <p data-astro-cid-ipsxrsrh>Altitude: 2600 ft</p> </div><div class="flight-card" data-astro-cid-ipsxrsrh> <h3 data-astro-cid-ipsxrsrh>UPS1083</h3> <p data-astro-cid-ipsxrsrh>Country: United States</p> <p data-astro-cid-ipsxrsrh>Speed: 427 km/h</p> <p data-astro-cid-ipsxrsrh>Altitude: 36025 ft</p> </div><div class="flight-card" data-astro-cid-ipsxrsrh> <h3 data-astro-cid-ipsxrsrh>WMN589</h3> <p data-astro-cid-ipsxrsrh>Country: United States</p> <p data-astro-cid-ipsxrsrh>Speed: 117 km/h</p> <p data-astro-cid-ipsxrsrh>Altitude: 100 ft</p> </div> </div> </section> </main>  </main> </body></html> <script type="module">
-  const flights = ${JSON.stringify(flights).replace(/</g, '\u003c')};
-  const input = document.querySelector('#searchInput');
-  const grid = document.querySelector('#flightGrid');
-  const status = document.querySelector('#searchStatus');
+<!DOCTYPE html><html lang="en"> <head><title>Flight Radar Dashboard</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/_astro/Navbar.Czw-4O8w.css"></head> <body class="bg-slate-950 text-slate-100"> <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-xl">  </header> <main class="mx-auto max-w-6xl px-4 py-8">  <nav class="border-b border-slate-800 bg-slate-950/80 py-6 backdrop-blur-xl"> <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4"> <a class="text-xl font-black tracking-[0.04em] text-white" href="/">Flight Radar</a> <ul class="flex items-center gap-6"> <li><a class="text-slate-300 transition hover:text-white" href="/">Home</a></li> <li><a class="text-slate-300 transition hover:text-white" href="/about">About</a></li> </ul> </div> </nav> <main class="space-y-6"> <section class="rounded-[28px] border border-white/10 bg-slate-900/80 p-6 shadow-glow backdrop-blur-xl"> <div class="mb-6 space-y-3"> <div> <p class="inline-flex rounded-full bg-sky-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-sky-300">Country Flights</p> <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">Selecciona un país</h1> <p class="mt-2 max-w-2xl text-sm text-slate-400">Elige un país y muestra hasta 20 vuelos recientes de ese país.</p> </div> <div class="w-full max-w-md"> <label class="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-slate-400" for="countrySelect">Country</label> <select id="countrySelect" class="w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-500/20"> <option value="Canada">Canada</option><option value="United States">United States</option><option value="Unknown">Unknown</option> </select> </div> </div> <div> <div class="mb-4 text-sm text-slate-300" id="searchStatus">Showing 0 flights</div> <div id="flightsData" data-flights="[{&#34;callsign&#34;:&#34;GTI8997&#34;,&#34;country&#34;:&#34;United States&#34;,&#34;speedKts&#34;:435,&#34;speedKmh&#34;:806,&#34;altitude&#34;:38000,&#34;lat&#34;:61.222687,&#34;lon&#34;:-153.428094},{&#34;callsign&#34;:&#34;N92AK&#34;,&#34;country&#34;:&#34;United States&#34;,&#34;speedKts&#34;:139,&#34;speedKmh&#34;:257,&#34;altitude&#34;:7200,&#34;lat&#34;:59.817624,&#34;lon&#34;:-152.10183},{&#34;callsign&#34;:&#34;AER67&#34;,&#34;country&#34;:&#34;United States&#34;,&#34;speedKts&#34;:267,&#34;speedKmh&#34;:494,&#34;altitude&#34;:20450,&#34;lat&#34;:60.627182,&#34;lon&#34;:-151.881724},{&#34;callsign&#34;:&#34;N7575K&#34;,&#34;country&#34;:&#34;United States&#34;,&#34;speedKts&#34;:88,&#34;speedKmh&#34;:163,&#34;altitude&#34;:5925,&#34;lat&#34;:61.242495,&#34;lon&#34;:-151.74703},{&#34;callsign&#34;:&#34;N500EH&#34;,&#34;country&#34;:&#34;United States&#34;,&#34;speedKts&#34;:91,&#34;speedKmh&#34;:169,&#34;altitude&#34;:575,&#34;lat&#34;:60.748808,&#34;lon&#34;:-151.256627},{&#34;callsign&#34;:&#34;~26fcae&#34;,&#34;country&#34;:&#34;Unknown&#34;,&#34;speedKts&#34;:0,&#34;speedKmh&#34;:0,&#34;altitude&#34;:1300,&#34;lat&#34;:60.549225,&#34;lon&#34;:-151.141568},{&#34;callsign&#34;:&#34;N1026V&#34;,&#34;country&#34;:&#34;United States&#34;,&#34;speedKts&#34;:148,&#34;speedKmh&#34;:274,&#34;altitude&#34;:2250,&#34;lat&#34;:60.845032,&#34;lon&#34;:-150.625501},{&#34;callsign&#34;:&#34;~26fcb4&#34;,&#34;country&#34;:&#34;Unknown&#34;,&#34;speedKts&#34;:0,&#34;speedKmh&#34;:0,&#34;altitude&#34;:1700,&#34;lat&#34;:61.371185,&#34;lon&#34;:-150.620597},{&#34;callsign&#34;:&#34;WAH&#34;,&#34;country&#34;:&#34;Canada&#34;,&#34;speedKts&#34;:149,&#34;speedKmh&#34;:276,&#34;altitude&#34;:1375,&#34;lat&#34;:60.98115,&#34;lon&#34;:-150.43942},{&#34;callsign&#34;:&#34;CPA3281&#34;,&#34;country&#34;:&#34;Unknown&#34;,&#34;speedKts&#34;:220,&#34;speedKmh&#34;:407,&#34;altitude&#34;:3600,&#34;lat&#34;:61.102279,&#34;lon&#34;:-150.323893},{&#34;callsign&#34;:&#34;~26fcb5&#34;,&#34;country&#34;:&#34;Unknown&#34;,&#34;speedKts&#34;:0,&#34;speedKmh&#34;:0,&#34;altitude&#34;:1300,&#34;lat&#34;:61.821808,&#34;lon&#34;:-150.294636},{&#34;callsign&#34;:&#34;N70052&#34;,&#34;country&#34;:&#34;United States&#34;,&#34;speedKts&#34;:96,&#34;speedKmh&#34;:178,&#34;altitude&#34;:2575,&#34;lat&#34;:60.398163,&#34;lon&#34;:-150.193145},{&#34;callsign&#34;:&#34;N5477T&#34;,&#34;country&#34;:&#34;United States&#34;,&#34;speedKts&#34;:84,&#34;speedKmh&#34;:156,&#34;altitude&#34;:2200,&#34;lat&#34;:61.496949,&#34;lon&#34;:-150.135396},{&#34;callsign&#34;:&#34;KING99&#34;,&#34;country&#34;:&#34;Unknown&#34;,&#34;speedKts&#34;:222,&#34;speedKmh&#34;:411,&#34;altitude&#34;:5775,&#34;lat&#34;:61.560633,&#34;lon&#34;:-150.085856},{&#34;callsign&#34;:&#34;N97705&#34;,&#34;country&#34;:&#34;United States&#34;,&#34;speedKts&#34;:98,&#34;speedKmh&#34;:181,&#34;altitude&#34;:3300,&#34;lat&#34;:62.063723,&#34;lon&#34;:-150.070292},{&#34;callsign&#34;:&#34;N8470Y&#34;,&#34;country&#34;:&#34;United States&#34;,&#34;speedKts&#34;:125,&#34;speedKmh&#34;:232,&#34;altitude&#34;:1400,&#34;lat&#34;:61.717987,&#34;lon&#34;:-150.030964},{&#34;callsign&#34;:&#34;N998AK&#34;,&#34;country&#34;:&#34;United States&#34;,&#34;speedKts&#34;:83,&#34;speedKmh&#34;:154,&#34;altitude&#34;:-125,&#34;lat&#34;:61.16978,&#34;lon&#34;:-149.995829},{&#34;callsign&#34;:&#34;ASA87&#34;,&#34;country&#34;:&#34;United States&#34;,&#34;speedKts&#34;:16,&#34;speedKmh&#34;:30,&#34;altitude&#34;:null,&#34;lat&#34;:61.168477,&#34;lon&#34;:-149.99555},{&#34;callsign&#34;:&#34;CPA2094&#34;,&#34;country&#34;:&#34;Unknown&#34;,&#34;speedKts&#34;:5,&#34;speedKmh&#34;:9,&#34;altitude&#34;:null,&#34;lat&#34;:61.173832,&#34;lon&#34;:-149.988932},{&#34;callsign&#34;:&#34;ASA99&#34;,&#34;country&#34;:&#34;United States&#34;,&#34;speedKts&#34;:8,&#34;speedKmh&#34;:15,&#34;altitude&#34;:null,&#34;lat&#34;:61.174255,&#34;lon&#34;:-149.985744}]" hidden></div> <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3" id="flightGrid"></div> </div> </section> <script type="module">
+      const flights = JSON.parse(document.getElementById('flightsData')?.dataset.flights || '[]');
+      const select = document.querySelector('#countrySelect');
+      const grid = document.querySelector('#flightGrid');
+      const status = document.querySelector('#searchStatus');
 
-  const normalize = (value) => value?.toString().toLowerCase() || '';
+      const renderFlights = (list) => {
+        if (!grid || !status) return;
+        grid.innerHTML = '';
+        const showing = list.slice(0, 20);
 
-  const createCard = (flight) => {
-    const card = document.createElement('div');
-    card.className = 'flight-card';
+        if (showing.length === 0) {
+          status.textContent = 'No flights available for this country.';
+          return;
+        }
 
-    const title = document.createElement('h3');
-    title.textContent = flight.callsign;
-    card.appendChild(title);
+        status.textContent = `Showing ${showing.length} flights for ${select?.value}`;
 
-    const country = document.createElement('p');
-    country.textContent = `Country: ${flight.country}`;
-    card.appendChild(country);
+        showing.forEach((flight) => {
+          const card = document.createElement('div');
+          card.className = 'rounded-[26px] border border-white/10 bg-white/5 p-5 shadow-glow backdrop-blur-xl';
 
-    const speed = document.createElement('p');
-    speed.textContent = `Speed: ${flight.speed} km/h`;
-    card.appendChild(speed);
+          const title = document.createElement('h3');
+          title.className = 'text-lg font-semibold text-white';
+          title.textContent = flight.callsign;
+          card.appendChild(title);
 
-    const altitude = document.createElement('p');
-    altitude.textContent = `Altitude: ${flight.altitude} ft`;
-    card.appendChild(altitude);
+          const country = document.createElement('p');
+          country.className = 'mt-2 text-sm text-slate-400';
+          country.textContent = `Country: ${flight.country}`;
+          card.appendChild(country);
 
-    return card;
-  };
+          const speed = document.createElement('p');
+          speed.className = 'text-sm text-slate-300';
+          speed.textContent = `Speed: ${flight.speed} km/h`;
+          card.appendChild(speed);
 
-  const renderFlights = (list) => {
-    if (!grid) return;
-    grid.innerHTML = '';
-    list.forEach((flight) => grid.appendChild(createCard(flight)));
+          const altitude = document.createElement('p');
+          altitude.className = 'text-sm text-slate-300';
+          altitude.textContent = `Altitude: ${flight.altitude} ft`;
+          card.appendChild(altitude);
 
-    status.textContent = list.length > 0
-      ? `Showing ${list.length} flights`
-      : 'No flights match your search.';
-  };
+          grid.appendChild(card);
+        });
+      };
 
-  if (input) {
-    input.addEventListener('input', () => {
-      const term = normalize(input.value);
-      const filtered = flights.filter((flight) =>
-        normalize(flight.callsign).includes(term) ||
-        normalize(flight.country).includes(term)
-      );
-      renderFlights(filtered);
-    });
-  }
-</script>
+      if (select) {
+        const update = () => {
+          const country = select.value;
+          const filtered = flights.filter((flight) => flight.country === country);
+          renderFlights(filtered);
+        };
+        select.addEventListener('change', update);
+        update();
+      }
+    </script> </main>  </main> </body></html>

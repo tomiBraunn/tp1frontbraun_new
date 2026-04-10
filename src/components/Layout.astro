@@ -1,35 +1,16 @@
 ---
+import '../styles/global.css';
 ---
-<html>
+<html lang="en">
   <head>
     <title>Flight Radar Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f4f4f4;
-      }
-
-      header {
-        background-color: #333;
-        color: white;
-        padding: 1rem;
-        text-align: center;
-      }
-
-      main {
-        margin: 0 auto;
-        max-width: 1200px;
-      }
-    </style>
   </head>
-  <body>
-    <header>
+  <body class="bg-slate-950 text-slate-100">
+    <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-xl">
       <slot name="header"></slot>
     </header>
-    <main>
+    <main class="mx-auto max-w-6xl px-4 py-8">
       <slot></slot>
     </main>
   </body>

@@ -1,27 +1,33 @@
 ---
-const { callsign, country, speed, altitude } = Astro.props;
+const { callsign, country, speedKts, speedKmh, altitude, lat, lon } = Astro.props;
+const hasLocation = lat && lon;
+const mapsUrl = hasLocation ? `https://www.google.com/maps/search/?api=1&query=${lat},${lon}` : null;
 ---
-<div class="flight-card">
-  <h3>{callsign}</h3>
-  <p>Country: {country}</p>
-  <p>Speed: {speed} km/h</p>
-  <p>Altitude: {altitude} ft</p>
+<div class="flight-card grid gap-4 rounded-[26px] border border-white/10 bg-white/5 p-5 shadow-glow backdrop-blur-xl" data-callsign={callsign.toLowerCase()} data-country={country.toLowerCase()} data-lat={lat} data-lon={lon}>
+  <div class="space-y-2">
+    <h3 class="text-lg font-semibold tracking-tight text-white">{callsign}</h3>
+    <p class="text-slate-400 text-sm">Country: {country}</p>
+  </div>
 
-  <style>
-    .flight-card {
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 1rem;
-      background-color: white;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+  <div class="grid gap-2 text-sm text-slate-300">
+    <p>Speed: <span class="text-sky-300 font-semibold">{speedKts} kt</span> <span class="text-slate-400">({speedKmh} km/h)</span></p>
+    <p>Altitude: <span class="text-slate-100">{altitude} ft</span></p>
+  </div>
 
-    h3 {
-      margin: 0 0 0.5rem;
-    }
-
-    p {
-      margin: 0.25rem 0;
-    }
-  </style>
+  {hasLocation ? (
+    <>
+      <div class="overflow-hidden rounded-2xl border border-white/10 h-[180px]">
+        <iframe
+          class="h-full w-full"
+          src={`https://maps.google.com/maps?q=${lat},${lon}&z=4&output=embed`}
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Flight location"
+        ></iframe>
+      </div>
+      <p class="text-sm text-slate-300">Location: <a class="text-sky-300 transition hover:text-sky-200" href={mapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a></p>
+    </>
+  ) : (
+    <p class="text-sm text-slate-300">Location: Unknown</p>
+  )}
 </div>

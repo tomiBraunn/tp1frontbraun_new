@@ -1,0 +1,51 @@
+---
+const { flights } = Astro.props;
+---
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+<div id="flight-map" class="w-full min-h-[520px] overflow-hidden rounded-[22px] border border-white/10 bg-slate-900 shadow-glow"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
+<script is:inline type="module">
+  const flights = ${JSON.stringify(flights).replace(/</g, '\u003c')};
+
+  const initMap = () => {
+    const mapEl = document.getElementById('flight-map');
+    if (!mapEl || typeof window.L === 'undefined') return;
+
+    const firstFlight = flights.find((flight) => flight.lat && flight.lon);
+    const center = firstFlight ? [firstFlight.lat, firstFlight.lon] : [0, 0];
+    const map = window.L.map(mapEl).setView(center, firstFlight ? 5 : 2);
+
+    window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors',
+      maxZoom: 18,
+    }).addTo(map);
+
+    flights.forEach((flight) => {
+      if (!flight.lat || !flight.lon) return;
+      const marker = window.L.marker([flight.lat, flight.lon]).addTo(map);
+      marker.bindPopup(`
+        <strong>${flight.callsign}</strong><br />
+        Country: ${flight.country}<br />
+        Speed: ${flight.speed} km/h<br />
+        Altitude: ${flight.altitude} ft
+      `);
+    });
+  };
+
+  const runInit = () => {
+    if (typeof window.L !== 'undefined') {
+      initMap();
+    } else {
+      window.addEventListener('load', initMap);
+      const leafletScript = document.querySelector('script[src*="leaflet.js"]');
+      if (leafletScript) {
+        leafletScript.addEventListener('load', initMap);
+      }
+    }
+  };
+
+  runInit();
+</script>

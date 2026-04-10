@@ -1,4 +1,4 @@
----
+﻿---
 import Layout from '../components/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import FlightCard from '../components/FlightCard.astro';
@@ -13,40 +13,113 @@ try {
   console.error('Flight fetch failed:', error.message);
   apiError = true;
 }
+
+const allCountries = Array.from(new Set(flights.map((flight) => flight.country).filter(Boolean))).sort();
+const defaultCountry = allCountries.includes('Argentina') ? 'Argentina' : (allCountries[0] ?? 'Argentina');
+const countries = allCountries;
+const selectedCountry = defaultCountry;
+const displayedFlights = flights.filter((flight) => flight.country === selectedCountry).slice(0, 20);
+const flightsJson = JSON.stringify(flights).replace(/</g, '\u003c');
 ---
 
 <Layout>
   <Navbar />
 
-  <main>
-    <section>
-      <h1>Live Flights Dashboard</h1>
-      {apiError ? (
-        <p style="color: red;">Error: Unable to fetch flight data. Please try again later.</p>
-      ) : (
-        <div class="flights-grid">
-          {flights.map(flight => (
-            <FlightCard {...flight} />
-          ))}
+  <main class="space-y-6">
+    <section class="rounded-[28px] border border-white/10 bg-slate-900/80 p-6 shadow-glow backdrop-blur-xl">
+      <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div class="space-y-2">
+          <p class="inline-flex rounded-full bg-sky-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-sky-300">Country Flights</p>
+          <h2 class="text-2xl font-semibold tracking-tight text-white sm:text-3xl">Vuelos por país</h2>
+        </div>
+
+        <div class="w-full sm:max-w-sm">
+          <label class="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-slate-400" for="countrySelect">Country</label>
+          <select id="countrySelect" class="w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-500/20">
+            {countries.map((country) => (
+              <option value={country} selected={country === selectedCountry}>{country}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {apiError && (
+        <div class="rounded-2xl border border-red-400/20 bg-red-500/10 px-4 py-3 text-sm text-red-200">Error: Unable to fetch flight data. Please try again later.</div>
+      )}
+
+      {!apiError && flights.length === 0 && (
+        <div class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-300">No flight data available right now.</div>
+      )}
+
+      {!apiError && flights.length > 0 && (
+        <div>
+          <div class="mb-4 text-sm text-slate-300" id="searchStatus">Showing {displayedFlights.length} flights for {selectedCountry}</div>
+          <div id="flightsData" data-flights={flightsJson} hidden></div>
+          <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3" id="flightGrid">
+            {displayedFlights.map((flight) => (
+              <FlightCard {...flight} />
+            ))}
+          </div>
         </div>
       )}
     </section>
 
-    <section>
-      <h2>Search Flights</h2>
-      <input type="text" placeholder="Search by callsign or country" />
-    </section>
+    <script is:inline type="module">
+      const flights = JSON.parse(document.getElementById('flightsData')?.dataset.flights || '[]');
+      const select = document.querySelector('#countrySelect');
+      const grid = document.querySelector('#flightGrid');
+      const status = document.querySelector('#searchStatus');
+
+      const renderFlights = (list) => {
+        if (!grid || !status) return;
+        grid.innerHTML = '';
+        const showing = list.slice(0, 20);
+
+        if (showing.length === 0) {
+          status.textContent = `No flights available for ${select?.value}.`;
+          return;
+        }
+
+        status.textContent = `Showing ${showing.length} flights for ${select?.value}`;
+
+        showing.forEach((flight) => {
+          const card = document.createElement('div');
+          card.className = 'rounded-[26px] border border-white/10 bg-white/5 p-5 shadow-glow backdrop-blur-xl';
+
+          const title = document.createElement('h3');
+          title.className = 'text-lg font-semibold text-white';
+          title.textContent = flight.callsign;
+          card.appendChild(title);
+
+          const country = document.createElement('p');
+          country.className = 'mt-2 text-sm text-slate-400';
+          country.textContent = `Country: ${flight.country}`;
+          card.appendChild(country);
+
+          const speed = document.createElement('p');
+          speed.className = 'text-sm text-slate-300';
+          speed.textContent = `Speed: ${flight.speed} km/h`;
+          card.appendChild(speed);
+
+          const altitude = document.createElement('p');
+          altitude.className = 'text-sm text-slate-300';
+          altitude.textContent = `Altitude: ${flight.altitude} ft`;
+          card.appendChild(altitude);
+
+          grid.appendChild(card);
+        });
+      };
+
+      if (select) {
+        const update = () => {
+          const country = select.value;
+          const filtered = flights.filter((flight) => flight.country === country);
+          renderFlights(filtered);
+        };
+
+        select.addEventListener('change', update);
+        update();
+      }
+    </script>
   </main>
 </Layout>
-
-<style>
-  main {
-    padding: 1rem;
-  }
-
-  .flights-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1rem;
-  }
-</style>

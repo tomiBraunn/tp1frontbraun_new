@@ -3,150 +3,107 @@ import Layout from '../components/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import { fetchFlights } from '../utils/fetchFlights.js';
 
-const flights = await fetchFlights();
+let flights = [];
+let apiError = false;
+
+try {
+  flights = await fetchFlights();
+} catch (error) {
+  console.error('Flight fetch failed:', error.message);
+  apiError = true;
+}
+
+const flightsJson = JSON.stringify(flights).replace(/</g, '\u003c');
 ---
 
 <Layout>
   <Navbar />
 
-  <main>
-    <section class="page-section">
-      <div class="page-heading">
+  <main class="space-y-6">
+    <section class="rounded-[28px] border border-white/10 bg-slate-900/80 p-6 shadow-glow backdrop-blur-xl">
+      <div class="mb-6 space-y-3">
         <div>
-          <h1>Search Flights</h1>
-          <p>Filter flights by callsign or country in real time.</p>
+          <p class="inline-flex rounded-full bg-sky-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-sky-300">Country Flights</p>
+          <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl">Selecciona un país</h1>
+          <p class="mt-2 max-w-2xl text-sm text-slate-400">Elige un país y muestra hasta 20 vuelos recientes de ese país.</p>
+        </div>
+
+        <div class="w-full max-w-md">
+          <label class="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-slate-400" for="countrySelect">Country</label>
+          <select id="countrySelect" class="w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-500/20">
+            {Array.from(new Set(flights.map((flight) => flight.country).filter(Boolean))).sort().map((country) => (
+              <option value={country}>{country}</option>
+            ))}
+          </select>
         </div>
       </div>
 
-      <div class="search-box">
-        <input id="searchInput" type="search" placeholder="Search by callsign or country" />
-      </div>
-
-      <div class="search-status" id="searchStatus">Showing {flights.length} flights</div>
-
-      <div class="flights-grid" id="flightGrid">
-        {flights.map((flight) => (
-          <div class="flight-card">
-            <h3>{flight.callsign}</h3>
-            <p>Country: {flight.country}</p>
-            <p>Speed: {flight.speed} km/h</p>
-            <p>Altitude: {flight.altitude} ft</p>
-          </div>
-        ))}
-      </div>
+      {apiError ? (
+        <div class="rounded-2xl border border-red-400/20 bg-red-500/10 px-4 py-3 text-sm text-red-200">Error: Unable to fetch flight data. Please try again later.</div>
+      ) : (
+        <div>
+          <div class="mb-4 text-sm text-slate-300" id="searchStatus">Showing 0 flights</div>
+          <div id="flightsData" data-flights={flightsJson} hidden></div>
+          <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3" id="flightGrid"></div>
+        </div>
+      )}
     </section>
+
+    <script is:inline type="module">
+      const flights = JSON.parse(document.getElementById('flightsData')?.dataset.flights || '[]');
+      const select = document.querySelector('#countrySelect');
+      const grid = document.querySelector('#flightGrid');
+      const status = document.querySelector('#searchStatus');
+
+      const renderFlights = (list) => {
+        if (!grid || !status) return;
+        grid.innerHTML = '';
+        const showing = list.slice(0, 20);
+
+        if (showing.length === 0) {
+          status.textContent = 'No flights available for this country.';
+          return;
+        }
+
+        status.textContent = `Showing ${showing.length} flights for ${select?.value}`;
+
+        showing.forEach((flight) => {
+          const card = document.createElement('div');
+          card.className = 'rounded-[26px] border border-white/10 bg-white/5 p-5 shadow-glow backdrop-blur-xl';
+
+          const title = document.createElement('h3');
+          title.className = 'text-lg font-semibold text-white';
+          title.textContent = flight.callsign;
+          card.appendChild(title);
+
+          const country = document.createElement('p');
+          country.className = 'mt-2 text-sm text-slate-400';
+          country.textContent = `Country: ${flight.country}`;
+          card.appendChild(country);
+
+          const speed = document.createElement('p');
+          speed.className = 'text-sm text-slate-300';
+          speed.textContent = `Speed: ${flight.speed} km/h`;
+          card.appendChild(speed);
+
+          const altitude = document.createElement('p');
+          altitude.className = 'text-sm text-slate-300';
+          altitude.textContent = `Altitude: ${flight.altitude} ft`;
+          card.appendChild(altitude);
+
+          grid.appendChild(card);
+        });
+      };
+
+      if (select) {
+        const update = () => {
+          const country = select.value;
+          const filtered = flights.filter((flight) => flight.country === country);
+          renderFlights(filtered);
+        };
+        select.addEventListener('change', update);
+        update();
+      }
+    </script>
   </main>
 </Layout>
-
-<script is:inline type="module">
-  const flights = ${JSON.stringify(flights).replace(/</g, '\u003c')};
-  const input = document.querySelector('#searchInput');
-  const grid = document.querySelector('#flightGrid');
-  const status = document.querySelector('#searchStatus');
-
-  const normalize = (value) => value?.toString().toLowerCase() || '';
-
-  const createCard = (flight) => {
-    const card = document.createElement('div');
-    card.className = 'flight-card';
-
-    const title = document.createElement('h3');
-    title.textContent = flight.callsign;
-    card.appendChild(title);
-
-    const country = document.createElement('p');
-    country.textContent = `Country: ${flight.country}`;
-    card.appendChild(country);
-
-    const speed = document.createElement('p');
-    speed.textContent = `Speed: ${flight.speed} km/h`;
-    card.appendChild(speed);
-
-    const altitude = document.createElement('p');
-    altitude.textContent = `Altitude: ${flight.altitude} ft`;
-    card.appendChild(altitude);
-
-    return card;
-  };
-
-  const renderFlights = (list) => {
-    if (!grid) return;
-    grid.innerHTML = '';
-    list.forEach((flight) => grid.appendChild(createCard(flight)));
-
-    status.textContent = list.length > 0
-      ? `Showing ${list.length} flights`
-      : 'No flights match your search.';
-  };
-
-  if (input) {
-    input.addEventListener('input', () => {
-      const term = normalize(input.value);
-      const filtered = flights.filter((flight) =>
-        normalize(flight.callsign).includes(term) ||
-        normalize(flight.country).includes(term)
-      );
-      renderFlights(filtered);
-    });
-  }
-</script>
-
-<style>
-  .page-section {
-    padding: 1rem;
-  }
-
-  .page-heading {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .search-box {
-    margin-bottom: 1rem;
-  }
-
-  input[type="search"] {
-    width: 100%;
-    max-width: 500px;
-    padding: 0.75rem 1rem;
-    border-radius: 999px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-  }
-
-  .search-status {
-    margin-bottom: 1rem;
-    color: #555;
-  }
-
-  .flights-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1rem;
-  }
-
-  .flight-card {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 1rem;
-    background-color: white;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  }
-
-  .flight-card h3 {
-    margin: 0 0 0.5rem;
-  }
-
-  .flight-card p {
-    margin: 0.25rem 0;
-  }
-
-  @media (max-width: 600px) {
-    .page-heading,
-    .search-box {
-      align-items: stretch;
-    }
-  }
-</style>
