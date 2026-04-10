@@ -1,0 +1,68 @@
+---
+import Layout from '../components/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+---
+
+<Layout>
+  <Navbar />
+
+  <main>
+    <section class="about-page">
+      <h1>About This Project</h1>
+      <p>
+        Este proyecto es un dashboard de vuelos en tiempo real creado con Astro.
+        En lugar de usar un mapa, los vuelos se muestran en cards que incluyen
+        callsign, país, velocidad y altitud.
+      </p>
+      <h2>Objetivos cumplidos</h2>
+      <ul>
+        <li>Una página principal con vuelos en vivo.</li>
+        <li>Página de búsqueda por callsign o país.</li>
+        <li>Página About con explicación del proyecto.</li>
+        <li>Diseño responsive con CSS Grid y Flexbox.</li>
+        <li>Comportamiento JavaScript para búsqueda en tiempo real.</li>
+      </ul>
+      <h2>Cómo funciona</h2>
+      <p>
+        El dashboard obtiene datos desde un servicio público de ADS-B. La página
+        de búsqueda filtra los resultados en el navegador para ofrecer una
+        experiencia rápida y sencilla.
+      </p>
+      <h2>Tecnologías</h2>
+      <p>
+        Astro, HTML semántico, CSS moderno y JavaScript vanilla.
+      </p>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .about-page {
+    padding: 1rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .about-page h1 {
+    margin-bottom: 0.5rem;
+  }
+
+  .about-page p {
+    line-height: 1.7;
+    color: #333;
+  }
+
+  .about-page h2 {
+    margin-top: 1.5rem;
+  }
+
+  .about-page ul {
+    list-style: disc inside;
+    margin: 0.75rem 0 0 0;
+    padding-left: 1rem;
+  }
+
+  .about-page li {
+    margin-bottom: 0.5rem;
+  }
+</style>

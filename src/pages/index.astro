@@ -1,0 +1,52 @@
+---
+import Layout from '../components/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import FlightCard from '../components/FlightCard.astro';
+import { fetchFlights } from '../utils/fetchFlights.js';
+
+let flights = [];
+let apiError = false;
+
+try {
+  flights = await fetchFlights();
+} catch (error) {
+  console.error('Flight fetch failed:', error.message);
+  apiError = true;
+}
+---
+
+<Layout>
+  <Navbar />
+
+  <main>
+    <section>
+      <h1>Live Flights Dashboard</h1>
+      {apiError ? (
+        <p style="color: red;">Error: Unable to fetch flight data. Please try again later.</p>
+      ) : (
+        <div class="flights-grid">
+          {flights.map(flight => (
+            <FlightCard {...flight} />
+          ))}
+        </div>
+      )}
+    </section>
+
+    <section>
+      <h2>Search Flights</h2>
+      <input type="text" placeholder="Search by callsign or country" />
+    </section>
+  </main>
+</Layout>
+
+<style>
+  main {
+    padding: 1rem;
+  }
+
+  .flights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+</style>

@@ -1,0 +1,27 @@
+---
+const { callsign, country, speed, altitude } = Astro.props;
+---
+<div class="flight-card">
+  <h3>{callsign}</h3>
+  <p>Country: {country}</p>
+  <p>Speed: {speed} km/h</p>
+  <p>Altitude: {altitude} ft</p>
+
+  <style>
+    .flight-card {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1rem;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h3 {
+      margin: 0 0 0.5rem;
+    }
+
+    p {
+      margin: 0.25rem 0;
+    }
+  </style>
+</div>

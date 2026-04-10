@@ -1,0 +1,152 @@
+---
+import Layout from '../components/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import { fetchFlights } from '../utils/fetchFlights.js';
+
+const flights = await fetchFlights();
+---
+
+<Layout>
+  <Navbar />
+
+  <main>
+    <section class="page-section">
+      <div class="page-heading">
+        <div>
+          <h1>Search Flights</h1>
+          <p>Filter flights by callsign or country in real time.</p>
+        </div>
+      </div>
+
+      <div class="search-box">
+        <input id="searchInput" type="search" placeholder="Search by callsign or country" />
+      </div>
+
+      <div class="search-status" id="searchStatus">Showing {flights.length} flights</div>
+
+      <div class="flights-grid" id="flightGrid">
+        {flights.map((flight) => (
+          <div class="flight-card">
+            <h3>{flight.callsign}</h3>
+            <p>Country: {flight.country}</p>
+            <p>Speed: {flight.speed} km/h</p>
+            <p>Altitude: {flight.altitude} ft</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<script is:inline type="module">
+  const flights = ${JSON.stringify(flights).replace(/</g, '\u003c')};
+  const input = document.querySelector('#searchInput');
+  const grid = document.querySelector('#flightGrid');
+  const status = document.querySelector('#searchStatus');
+
+  const normalize = (value) => value?.toString().toLowerCase() || '';
+
+  const createCard = (flight) => {
+    const card = document.createElement('div');
+    card.className = 'flight-card';
+
+    const title = document.createElement('h3');
+    title.textContent = flight.callsign;
+    card.appendChild(title);
+
+    const country = document.createElement('p');
+    country.textContent = `Country: ${flight.country}`;
+    card.appendChild(country);
+
+    const speed = document.createElement('p');
+    speed.textContent = `Speed: ${flight.speed} km/h`;
+    card.appendChild(speed);
+
+    const altitude = document.createElement('p');
+    altitude.textContent = `Altitude: ${flight.altitude} ft`;
+    card.appendChild(altitude);
+
+    return card;
+  };
+
+  const renderFlights = (list) => {
+    if (!grid) return;
+    grid.innerHTML = '';
+    list.forEach((flight) => grid.appendChild(createCard(flight)));
+
+    status.textContent = list.length > 0
+      ? `Showing ${list.length} flights`
+      : 'No flights match your search.';
+  };
+
+  if (input) {
+    input.addEventListener('input', () => {
+      const term = normalize(input.value);
+      const filtered = flights.filter((flight) =>
+        normalize(flight.callsign).includes(term) ||
+        normalize(flight.country).includes(term)
+      );
+      renderFlights(filtered);
+    });
+  }
+</script>
+
+<style>
+  .page-section {
+    padding: 1rem;
+  }
+
+  .page-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .search-box {
+    margin-bottom: 1rem;
+  }
+
+  input[type="search"] {
+    width: 100%;
+    max-width: 500px;
+    padding: 0.75rem 1rem;
+    border-radius: 999px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+
+  .search-status {
+    margin-bottom: 1rem;
+    color: #555;
+  }
+
+  .flights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+
+  .flight-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1rem;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .flight-card h3 {
+    margin: 0 0 0.5rem;
+  }
+
+  .flight-card p {
+    margin: 0.25rem 0;
+  }
+
+  @media (max-width: 600px) {
+    .page-heading,
+    .search-box {
+      align-items: stretch;
+    }
+  }
+</style>
