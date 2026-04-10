@@ -1,12 +1,26 @@
 ---
+const pathname = Astro.url.pathname;
 ---
-<nav class="navbar border-b border-white/10 bg-slate-950/80 py-6">
+<nav class="navbar sticky top-0 z-50 border-b border-white/8 bg-slate-950/75 py-4">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4">
-    <a class="text-xl font-black tracking-[0.04em] text-white" href="/">Flight Radar</a>
-    <div class="flex items-center gap-4">
+    <!-- Brand -->
+    <a class="flex items-center gap-2.5 text-white" href="/">
+      <span class="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-sky-500 to-indigo-600 text-base shadow-lg shadow-sky-500/20">✈</span>
+      <span class="text-lg font-black tracking-tight">SkyTrack</span>
+    </a>
+
+    <!-- Links + toggle -->
+    <div class="flex items-center gap-6">
       <ul class="flex items-center gap-6">
-        <li><a class="text-slate-300 transition hover:text-white" href="/">Home</a></li>
-        <li><a class="text-slate-300 transition hover:text-white" href="/about">About</a></li>
+        <li>
+          <a class={`nav-link${pathname === '/' ? ' active' : ''}`} href="/">Inicio</a>
+        </li>
+        <li>
+          <a class={`nav-link${pathname === '/search' || pathname === '/search/' ? ' active' : ''}`} href="/search">Buscar</a>
+        </li>
+        <li>
+          <a class={`nav-link${pathname === '/about' || pathname === '/about/' ? ' active' : ''}`} href="/about">Sobre</a>
+        </li>
       </ul>
       <button id="themeToggle" class="theme-button" aria-label="Toggle light and dark theme">Light</button>
     </div>

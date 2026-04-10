@@ -3,20 +3,46 @@ const { callsign, country, speedKts, speedKmh, altitude, lat, lon } = Astro.prop
 const hasLocation = lat && lon;
 const mapsUrl = hasLocation ? `https://www.google.com/maps/search/?api=1&query=${lat},${lon}` : null;
 ---
-<div class="flight-card grid gap-4 rounded-[26px] border border-white/10 bg-white/5 p-5 shadow-glow backdrop-blur-xl transition duration-300 ease-out hover:-translate-y-1 hover:shadow-2xl" data-callsign={callsign.toLowerCase()} data-country={country.toLowerCase()} data-lat={lat} data-lon={lon}>
-  <div class="space-y-2">
-    <h3 class="text-lg font-semibold tracking-tight text-white">{callsign}</h3>
-    <p class="text-slate-400 text-sm">Country: {country}</p>
+<div
+  class="flight-card group flex flex-col gap-4 rounded-2xl border border-white/10 bg-slate-950/60 p-5 shadow-glow backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-sky-500/30 hover:bg-slate-900/80 hover:shadow-xl"
+  data-callsign={callsign.toLowerCase()}
+  data-country={country.toLowerCase()}
+  data-lat={lat}
+  data-lon={lon}
+>
+  <!-- Top accent bar -->
+  <div class="absolute inset-x-0 top-0 h-0.5 rounded-t-2xl bg-gradient-to-r from-sky-400 via-indigo-400 to-violet-400 opacity-70 transition duration-300 group-hover:opacity-100"></div>
+
+  <!-- Header -->
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      <h3 class="text-lg font-bold tracking-tight text-white">{callsign}</h3>
+      <span class="mt-1 inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 text-xs font-medium text-slate-300">
+        <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+        {country}
+      </span>
+    </div>
+    <div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-sky-500/10 text-sky-400 text-sm">✈</div>
   </div>
 
-  <div class="grid gap-2 text-sm text-slate-300">
-    <p>Speed: <span class="text-sky-300 font-semibold">{speedKts} kt</span> <span class="text-slate-400">({speedKmh} km/h)</span></p>
-    <p>Altitude: <span class="text-slate-100">{altitude} ft</span></p>
+  <!-- Metrics -->
+  <div class="grid grid-cols-2 gap-2">
+    <div class="metric-chip">
+      <p class="text-[10px] font-semibold uppercase tracking-widest text-amber-400/80">Velocidad</p>
+      <p class="mt-0.5 text-sm font-bold text-amber-300">{speedKts} kt</p>
+      <p class="text-xs text-slate-500">{speedKmh} km/h</p>
+    </div>
+    <div class="metric-chip">
+      <p class="text-[10px] font-semibold uppercase tracking-widest text-sky-400/80">Altitud</p>
+      <p class="mt-0.5 text-sm font-bold text-sky-300">{altitude} ft</p>
+      <p class="text-xs text-slate-500">{Math.round(altitude * 0.3048)} m</p>
+    </div>
   </div>
 
+  <!-- Map -->
   {hasLocation ? (
     <>
-      <div class="overflow-hidden rounded-2xl border border-white/10 h-[180px]">
+      <div class="overflow-hidden rounded-xl border border-white/8 h-[160px]">
         <iframe
           class="h-full w-full"
           src={`https://maps.google.com/maps?q=${lat},${lon}&z=4&output=embed`}
@@ -25,9 +51,17 @@ const mapsUrl = hasLocation ? `https://www.google.com/maps/search/?api=1&query=$
           title="Flight location"
         ></iframe>
       </div>
-      <p class="text-sm text-slate-300">Location: <a class="text-sky-300 transition hover:text-sky-200" href={mapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps</a></p>
+      <a
+        class="flex items-center gap-1.5 text-xs font-medium text-sky-400 transition hover:text-sky-300"
+        href={mapsUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        Abrir en Google Maps
+      </a>
     </>
   ) : (
-    <p class="text-sm text-slate-300">Location: Unknown</p>
+    <p class="text-xs text-slate-500">Ubicación no disponible</p>
   )}
 </div>

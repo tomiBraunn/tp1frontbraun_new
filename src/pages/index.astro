@@ -19,64 +19,84 @@ const countries = ['Todos', ...allCountries];
 const selectedCountry = 'Todos';
 const displayedFlights = flights.slice(0, 20);
 const flightsJson = JSON.stringify(flights).replace(/</g, '\u003c');
+const totalCountries = allCountries.length;
 ---
 
 <Layout>
   <Navbar />
 
-  <main class="space-y-8">
-    <section class="panel rounded-[32px] p-8">
-      <div class="grid gap-6 lg:grid-cols-[1.6fr_1fr]">
-        <div class="space-y-6">
-          <div class="space-y-3">
-            <p class="inline-flex rounded-full bg-sky-500/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-sky-300">Flight Radar</p>
-            <h1 class="text-3xl font-semibold tracking-tight text-white sm:text-4xl">Dashboard de vuelos en tiempo real</h1>
-            <p class="max-w-2xl text-slate-300">Explora vuelos activos sin recargar la página. Filtra por país, ve hasta 20 vuelos y consulta la ubicación directamente desde la tarjeta.</p>
-          </div>
-        </div>
+  <div class="mx-auto max-w-6xl px-4 py-10 space-y-10">
 
-        <div class="rounded-[28px] border border-white/10 bg-gradient-to-br from-slate-950/80 via-slate-900/90 to-slate-950/70 p-6 shadow-xl">
-          <div class="space-y-4">
-            <div class="space-y-2">
-              <p class="text-sm uppercase tracking-[0.2em] text-slate-400">Filtro de país</p>
-              <h2 class="text-2xl font-semibold text-white">Selecciona una vista</h2>
-            </div>
-            <div class="space-y-3">
-              <label class="block text-sm font-medium text-slate-300" for="countrySelect">Mostrar vuelos de</label>
-              <select id="countrySelect" class="w-full rounded-3xl border border-white/10 bg-slate-950/80 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-500/20">
-                {countries.map((country) => (
-                  <option value={country} selected={country === selectedCountry}>{country}</option>
-                ))}
-              </select>
-            </div>
-            <p class="text-sm leading-6 text-slate-400">La opción <strong class="text-white">Todos</strong> muestra hasta 20 vuelos activos sin aplicar filtro de país.</p>
-          </div>
-        </div>
-      </div>
+    <!-- Hero -->
+    <section class="text-center space-y-4 py-6">
+      <span class="inline-flex items-center gap-2 rounded-full border border-sky-500/20 bg-sky-500/8 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-sky-300">
+        <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-sky-400"></span>
+        En vivo
+      </span>
+      <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+        <span class="gradient-text">SkyTrack</span>
+      </h1>
+      <p class="mx-auto max-w-xl text-base text-slate-400">
+        Explora vuelos activos en tiempo real. Filtra por país, consulta velocidad, altitud y ubicación desde cada tarjeta.
+      </p>
     </section>
 
-    <section class="panel rounded-[32px] p-6">
-      <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <!-- Stats row -->
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3">
+      <div class="stat-card rounded-2xl p-5 text-center">
+        <p class="text-2xl font-extrabold gradient-text">{flights.length}</p>
+        <p class="mt-1 text-xs font-medium uppercase tracking-widest text-slate-500">Vuelos cargados</p>
+      </div>
+      <div class="stat-card rounded-2xl p-5 text-center">
+        <p class="text-2xl font-extrabold gradient-text">{totalCountries}</p>
+        <p class="mt-1 text-xs font-medium uppercase tracking-widest text-slate-500">Países</p>
+      </div>
+      <div class="stat-card col-span-2 sm:col-span-1 rounded-2xl p-5 text-center">
+        <p class="text-2xl font-extrabold gradient-text">{displayedFlights.length}</p>
+        <p class="mt-1 text-xs font-medium uppercase tracking-widest text-slate-500">Mostrando ahora</p>
+      </div>
+    </div>
+
+    <!-- Filter + results -->
+    <section class="space-y-6">
+      <!-- Filter bar -->
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p class="text-sm uppercase tracking-[0.2em] text-slate-400">Resultados</p>
-          <h2 class="text-2xl font-semibold text-white">Vuelos activos</h2>
+          <h2 class="text-xl font-bold text-white">Vuelos activos</h2>
+          <p class="mt-0.5 text-sm text-slate-500" id="searchStatus">Mostrando {displayedFlights.length} vuelos para Todos</p>
         </div>
-        <div class="rounded-full bg-slate-950/70 px-4 py-2 text-sm text-slate-300">Mostrando hasta 20 vuelos</div>
+        <div class="flex items-center gap-3">
+          <label class="text-xs font-semibold uppercase tracking-widest text-slate-500 shrink-0" for="countrySelect">País</label>
+          <select
+            id="countrySelect"
+            class="rounded-xl border border-white/10 bg-slate-900/80 px-4 py-2.5 text-sm text-slate-100 outline-none transition focus:border-sky-400 focus:ring-2 focus:ring-sky-500/20"
+          >
+            {countries.map((country) => (
+              <option value={country} selected={country === selectedCountry}>{country}</option>
+            ))}
+          </select>
+        </div>
       </div>
 
+      <!-- Error state -->
       {apiError && (
-        <div class="rounded-2xl border border-red-400/20 bg-red-500/10 px-4 py-3 text-sm text-red-200">Error: Unable to fetch flight data. Please try again later.</div>
+        <div class="rounded-2xl border border-red-400/20 bg-red-500/10 px-5 py-4 text-sm text-red-300">
+          ⚠️ No se pudieron cargar los datos de vuelos. Intenta de nuevo más tarde.
+        </div>
       )}
 
+      <!-- Empty state -->
       {!apiError && flights.length === 0 && (
-        <div class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-300">No hay datos de vuelos disponibles en este momento.</div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-sm text-slate-400">
+          No hay datos de vuelos disponibles en este momento.
+        </div>
       )}
 
+      <!-- Flight grid -->
       {!apiError && flights.length > 0 && (
         <div>
-          <div class="mb-4 text-sm text-slate-300" id="searchStatus">Mostrando {displayedFlights.length} vuelos para {selectedCountry}</div>
           <div id="flightsData" data-flights={flightsJson} hidden></div>
-          <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3" id="flightGrid">
+          <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3" id="flightGrid">
             {displayedFlights.map((flight) => (
               <FlightCard {...flight} />
             ))}
@@ -84,96 +104,109 @@ const flightsJson = JSON.stringify(flights).replace(/</g, '\u003c');
         </div>
       )}
     </section>
+  </div>
 
-    <script is:inline type="module">
-      const flights = JSON.parse(document.getElementById('flightsData')?.dataset.flights || '[]');
-      const select = document.querySelector('#countrySelect');
-      const grid = document.querySelector('#flightGrid');
-      const status = document.querySelector('#searchStatus');
+  <script is:inline type="module">
+    const flights = JSON.parse(document.getElementById('flightsData')?.dataset.flights || '[]');
+    const select = document.querySelector('#countrySelect');
+    const grid = document.querySelector('#flightGrid');
+    const status = document.querySelector('#searchStatus');
 
-      const renderFlights = (list) => {
-        if (!grid || !status) return;
-        grid.innerHTML = '';
-        const showing = list.slice(0, 20);
+    const renderFlights = (list) => {
+      if (!grid || !status) return;
+      grid.innerHTML = '';
+      const showing = list.slice(0, 20);
 
-        if (showing.length === 0) {
-          status.textContent = `No hay vuelos disponibles para ${select?.value}.`;
-          return;
+      if (showing.length === 0) {
+        status.textContent = `No hay vuelos disponibles para ${select?.value}.`;
+        return;
+      }
+
+      status.textContent = `Mostrando ${showing.length} vuelos para ${select?.value}`;
+
+      showing.forEach((flight) => {
+        const card = document.createElement('div');
+        card.className = 'flight-card group relative flex flex-col gap-4 rounded-2xl border border-white/10 bg-slate-950/60 p-5 shadow-glow backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-sky-500/30 hover:bg-slate-900/80 hover:shadow-xl';
+
+        const accent = document.createElement('div');
+        accent.className = 'absolute inset-x-0 top-0 h-0.5 rounded-t-2xl bg-gradient-to-r from-sky-400 via-indigo-400 to-violet-400 opacity-70 transition duration-300 group-hover:opacity-100';
+        card.appendChild(accent);
+
+        const header = document.createElement('div');
+        header.className = 'flex items-start justify-between gap-3';
+
+        const headerLeft = document.createElement('div');
+        const title = document.createElement('h3');
+        title.className = 'text-lg font-bold tracking-tight text-white';
+        title.textContent = flight.callsign;
+        const badge = document.createElement('span');
+        badge.className = 'mt-1 inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 text-xs font-medium text-slate-300';
+        badge.innerHTML = `<span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>${flight.country}`;
+        headerLeft.appendChild(title);
+        headerLeft.appendChild(badge);
+
+        const icon = document.createElement('div');
+        icon.className = 'flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-sky-500/10 text-sky-400 text-sm';
+        icon.textContent = '✈';
+
+        header.appendChild(headerLeft);
+        header.appendChild(icon);
+        card.appendChild(header);
+
+        const metrics = document.createElement('div');
+        metrics.className = 'grid grid-cols-2 gap-2';
+
+        const speedChip = document.createElement('div');
+        speedChip.className = 'metric-chip';
+        speedChip.innerHTML = `<p class="text-[10px] font-semibold uppercase tracking-widest text-amber-400/80">Velocidad</p><p class="mt-0.5 text-sm font-bold text-amber-300">${flight.speedKts} kt</p><p class="text-xs text-slate-500">${flight.speedKmh} km/h</p>`;
+
+        const altChip = document.createElement('div');
+        altChip.className = 'metric-chip';
+        const altM = Math.round(flight.altitude * 0.3048);
+        altChip.innerHTML = `<p class="text-[10px] font-semibold uppercase tracking-widest text-sky-400/80">Altitud</p><p class="mt-0.5 text-sm font-bold text-sky-300">${flight.altitude} ft</p><p class="text-xs text-slate-500">${altM} m</p>`;
+
+        metrics.appendChild(speedChip);
+        metrics.appendChild(altChip);
+        card.appendChild(metrics);
+
+        if (flight.lat && flight.lon) {
+          const mapContainer = document.createElement('div');
+          mapContainer.className = 'overflow-hidden rounded-xl border border-white/8 h-[160px]';
+          const iframe = document.createElement('iframe');
+          iframe.className = 'h-full w-full';
+          iframe.src = `https://maps.google.com/maps?q=${flight.lat},${flight.lon}&z=4&output=embed`;
+          iframe.loading = 'lazy';
+          iframe.referrerPolicy = 'no-referrer-when-downgrade';
+          iframe.title = 'Flight location';
+          mapContainer.appendChild(iframe);
+          card.appendChild(mapContainer);
+
+          const link = document.createElement('a');
+          link.className = 'flex items-center gap-1.5 text-xs font-medium text-sky-400 transition hover:text-sky-300';
+          link.href = `https://www.google.com/maps/search/?api=1&query=${flight.lat},${flight.lon}`;
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          link.innerHTML = `<svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Abrir en Google Maps`;
+          card.appendChild(link);
+        } else {
+          const noLoc = document.createElement('p');
+          noLoc.className = 'text-xs text-slate-500';
+          noLoc.textContent = 'Ubicación no disponible';
+          card.appendChild(noLoc);
         }
 
-        status.textContent = `Mostrando ${showing.length} vuelos para ${select?.value}`;
+        grid.appendChild(card);
+      });
+    };
 
-        showing.forEach((flight) => {
-          const card = document.createElement('div');
-          card.className = 'flight-card group relative overflow-hidden rounded-[28px] border border-white/10 bg-slate-950/70 p-6 shadow-glow backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-sky-400/40 hover:bg-slate-900/90';
-          const accent = document.createElement('div');
-          accent.className = 'absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-sky-400 via-cyan-400 to-violet-400 opacity-60';
-          card.appendChild(accent);
-
-          const title = document.createElement('h3');
-          title.className = 'text-xl font-semibold text-white';
-          title.textContent = flight.callsign;
-          card.appendChild(title);
-
-          const badge = document.createElement('span');
-          badge.className = 'inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-300 mt-2';
-          badge.textContent = flight.country;
-          card.appendChild(badge);
-
-          const infoList = document.createElement('div');
-          infoList.className = 'mt-4 grid gap-3 text-sm';
-
-          const speed = document.createElement('div');
-          speed.className = 'rounded-3xl bg-slate-900/70 p-3';
-          speed.innerHTML = `<p class="text-slate-400">Velocidad</p><p class="mt-1 text-white font-semibold">${flight.speed} kt <span class="text-slate-400">(${flight.speedKmh || ''} km/h)</span></p>`;
-          infoList.appendChild(speed);
-
-          const altitude = document.createElement('div');
-          altitude.className = 'rounded-3xl bg-slate-900/70 p-3';
-          altitude.innerHTML = `<p class="text-slate-400">Altitud</p><p class="mt-1 text-white font-semibold">${flight.altitude} ft</p>`;
-          infoList.appendChild(altitude);
-
-          card.appendChild(infoList);
-
-          if (flight.lat && flight.lon) {
-            const mapContainer = document.createElement('div');
-            mapContainer.className = 'overflow-hidden rounded-3xl border border-white/10 h-[180px] mt-5';
-
-            const iframe = document.createElement('iframe');
-            iframe.className = 'h-full w-full';
-            iframe.src = `https://maps.google.com/maps?q=${flight.lat},${flight.lon}&z=4&output=embed`;
-            iframe.loading = 'lazy';
-            iframe.referrerPolicy = 'no-referrer-when-downgrade';
-            iframe.title = 'Flight location';
-
-            mapContainer.appendChild(iframe);
-            card.appendChild(mapContainer);
-
-            const locationLink = document.createElement('p');
-            locationLink.className = 'text-sm text-slate-300 mt-3';
-            locationLink.innerHTML = `Location: <a class="text-sky-300 transition hover:text-sky-200" href="https://www.google.com/maps/search/?api=1&query=${flight.lat},${flight.lon}" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>`;
-            card.appendChild(locationLink);
-          } else {
-            const locationText = document.createElement('p');
-            locationText.className = 'text-sm text-slate-300 mt-5';
-            locationText.textContent = 'Location: Unknown';
-            card.appendChild(locationText);
-          }
-
-          grid.appendChild(card);
-        });
+    if (select) {
+      const update = () => {
+        const country = select.value;
+        const filtered = country === 'Todos' ? flights : flights.filter((flight) => flight.country === country);
+        renderFlights(filtered);
       };
-
-      if (select) {
-        const update = () => {
-          const country = select.value;
-          const filtered = country === 'Todos' ? flights : flights.filter((flight) => flight.country === country);
-          renderFlights(filtered);
-        };
-
-        select.addEventListener('change', update);
-        update();
-      }
-    </script>
-  </main>
+      select.addEventListener('change', update);
+      update();
+    }
+  </script>
 </Layout>
