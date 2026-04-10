@@ -6,12 +6,35 @@ import '../styles/global.css';
     <title>Flight Radar Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
-  <body class="bg-slate-950 text-slate-100">
+  <body class="app-shell">
     <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-xl">
       <slot name="header"></slot>
     </header>
     <main class="mx-auto max-w-6xl px-4 py-8">
       <slot></slot>
     </main>
+    <script is:inline>
+      const root = document.documentElement;
+      const storedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initialTheme = storedTheme || (prefersDark ? 'dark' : 'light');
+      root.dataset.theme = initialTheme;
+      const themeToggle = document.getElementById('themeToggle');
+      const updateButton = (value) => {
+        if (!themeToggle) return;
+        themeToggle.textContent = value === 'dark' ? 'Light' : 'Dark';
+      };
+      const setTheme = (theme) => {
+        root.dataset.theme = theme;
+        localStorage.setItem('theme', theme);
+        updateButton(theme);
+      };
+      updateButton(initialTheme);
+      if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+          setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark');
+        });
+      }
+    </script>
   </body>
 </html>

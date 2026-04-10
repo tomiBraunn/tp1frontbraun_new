@@ -3,7 +3,7 @@ const { callsign, country, speedKts, speedKmh, altitude, lat, lon } = Astro.prop
 const hasLocation = lat && lon;
 const mapsUrl = hasLocation ? `https://www.google.com/maps/search/?api=1&query=${lat},${lon}` : null;
 ---
-<div class="flight-card grid gap-4 rounded-[26px] border border-white/10 bg-white/5 p-5 shadow-glow backdrop-blur-xl" data-callsign={callsign.toLowerCase()} data-country={country.toLowerCase()} data-lat={lat} data-lon={lon}>
+<div class="flight-card grid gap-4 rounded-[26px] border border-white/10 bg-white/5 p-5 shadow-glow backdrop-blur-xl transition duration-300 ease-out hover:-translate-y-1 hover:shadow-2xl" data-callsign={callsign.toLowerCase()} data-country={country.toLowerCase()} data-lat={lat} data-lon={lon}>
   <div class="space-y-2">
     <h3 class="text-lg font-semibold tracking-tight text-white">{callsign}</h3>
     <p class="text-slate-400 text-sm">Country: {country}</p>

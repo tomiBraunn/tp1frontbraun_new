@@ -1,11 +1,14 @@
 ---
 ---
-<nav class="border-b border-slate-800 bg-slate-950/80 py-6 backdrop-blur-xl">
+<nav class="navbar border-b border-white/10 bg-slate-950/80 py-6">
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4">
     <a class="text-xl font-black tracking-[0.04em] text-white" href="/">Flight Radar</a>
-    <ul class="flex items-center gap-6">
-      <li><a class="text-slate-300 transition hover:text-white" href="/">Home</a></li>
-      <li><a class="text-slate-300 transition hover:text-white" href="/about">About</a></li>
-    </ul>
+    <div class="flex items-center gap-4">
+      <ul class="flex items-center gap-6">
+        <li><a class="text-slate-300 transition hover:text-white" href="/">Home</a></li>
+        <li><a class="text-slate-300 transition hover:text-white" href="/about">About</a></li>
+      </ul>
+      <button id="themeToggle" class="theme-button" aria-label="Toggle light and dark theme">Light</button>
+    </div>
   </div>
 </nav>

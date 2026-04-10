@@ -1,13 +1,35 @@
-<!DOCTYPE html><html lang="en"> <head><title>Flight Radar Dashboard</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/_astro/Navbar.Czw-4O8w.css">
+<!DOCTYPE html><html lang="en"> <head><title>Flight Radar Dashboard</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/_astro/Navbar.QcmgJKRU.css">
 <style>.about-page[data-astro-cid-kh7btl4r]{padding:1rem;max-width:900px;margin:0 auto}.about-page[data-astro-cid-kh7btl4r] h1[data-astro-cid-kh7btl4r]{margin-bottom:.5rem}.about-page[data-astro-cid-kh7btl4r] p[data-astro-cid-kh7btl4r]{line-height:1.7;color:#333}.about-page[data-astro-cid-kh7btl4r] h2[data-astro-cid-kh7btl4r]{margin-top:1.5rem}.about-page[data-astro-cid-kh7btl4r] ul[data-astro-cid-kh7btl4r]{list-style:disc inside;margin:.75rem 0 0;padding-left:1rem}.about-page[data-astro-cid-kh7btl4r] li[data-astro-cid-kh7btl4r]{margin-bottom:.5rem}
-</style></head> <body class="bg-slate-950 text-slate-100"> <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-xl">  </header> <main class="mx-auto max-w-6xl px-4 py-8">  <nav class="border-b border-slate-800 bg-slate-950/80 py-6 backdrop-blur-xl"> <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4"> <a class="text-xl font-black tracking-[0.04em] text-white" href="/">Flight Radar</a> <ul class="flex items-center gap-6"> <li><a class="text-slate-300 transition hover:text-white" href="/">Home</a></li> <li><a class="text-slate-300 transition hover:text-white" href="/about">About</a></li> </ul> </div> </nav> <main data-astro-cid-kh7btl4r> <section class="about-page" data-astro-cid-kh7btl4r> <h1 data-astro-cid-kh7btl4r>About This Project</h1> <p data-astro-cid-kh7btl4r>
+</style></head> <body class="app-shell"> <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-xl">  </header> <main class="mx-auto max-w-6xl px-4 py-8">  <nav class="navbar border-b border-white/10 bg-slate-950/80 py-6"> <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4"> <a class="text-xl font-black tracking-[0.04em] text-white" href="/">Flight Radar</a> <div class="flex items-center gap-4"> <ul class="flex items-center gap-6"> <li><a class="text-slate-300 transition hover:text-white" href="/">Home</a></li> <li><a class="text-slate-300 transition hover:text-white" href="/about">About</a></li> </ul> <button id="themeToggle" class="theme-button" aria-label="Toggle light and dark theme">Light</button> </div> </div> </nav> <main data-astro-cid-kh7btl4r> <section class="about-page" data-astro-cid-kh7btl4r> <h1 data-astro-cid-kh7btl4r>Sobre este proyecto</h1> <p data-astro-cid-kh7btl4r>
 Este proyecto es un dashboard de vuelos en tiempo real creado con Astro.
-        En lugar de usar un mapa, los vuelos se muestran en cards que incluyen
-        callsign, país, velocidad y altitud.
+        En lugar de usar un mapa grande, los vuelos se muestran en cards que
+        incluyen callsign, país, velocidad y altitud.
 </p> <h2 data-astro-cid-kh7btl4r>Objetivos cumplidos</h2> <ul data-astro-cid-kh7btl4r> <li data-astro-cid-kh7btl4r>Una página principal con vuelos en vivo.</li> <li data-astro-cid-kh7btl4r>Página de búsqueda por callsign o país.</li> <li data-astro-cid-kh7btl4r>Página About con explicación del proyecto.</li> <li data-astro-cid-kh7btl4r>Diseño responsive con CSS Grid y Flexbox.</li> <li data-astro-cid-kh7btl4r>Comportamiento JavaScript para búsqueda en tiempo real.</li> </ul> <h2 data-astro-cid-kh7btl4r>Cómo funciona</h2> <p data-astro-cid-kh7btl4r>
 El dashboard obtiene datos desde un servicio público de ADS-B. La página
         de búsqueda filtra los resultados en el navegador para ofrecer una
         experiencia rápida y sencilla.
 </p> <h2 data-astro-cid-kh7btl4r>Tecnologías</h2> <p data-astro-cid-kh7btl4r>
 Astro, HTML semántico, CSS moderno y JavaScript vanilla.
-</p> </section> </main>  </main> </body></html>
+</p> </section> </main>  </main> <script>
+      const root = document.documentElement;
+      const storedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initialTheme = storedTheme || (prefersDark ? 'dark' : 'light');
+      root.dataset.theme = initialTheme;
+      const themeToggle = document.getElementById('themeToggle');
+      const updateButton = (value) => {
+        if (!themeToggle) return;
+        themeToggle.textContent = value === 'dark' ? 'Light' : 'Dark';
+      };
+      const setTheme = (theme) => {
+        root.dataset.theme = theme;
+        localStorage.setItem('theme', theme);
+        updateButton(theme);
+      };
+      updateButton(initialTheme);
+      if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+          setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark');
+        });
+      }
+    </script> </body> </html>
