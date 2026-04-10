@@ -4,7 +4,7 @@ const hasLocation = lat && lon;
 const mapsUrl = hasLocation ? `https://www.google.com/maps/search/?api=1&query=${lat},${lon}` : null;
 ---
 <div
-  class="flight-card group flex flex-col gap-4 rounded-2xl border border-white/10 bg-slate-950/60 p-5 shadow-glow backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-sky-500/30 hover:bg-slate-900/80 hover:shadow-xl"
+  class="flight-card group relative flex flex-col gap-4 rounded-2xl border border-white/10 bg-slate-950/60 p-5 shadow-glow backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-sky-500/30 hover:bg-slate-900/80 hover:shadow-xl"
   data-callsign={callsign.toLowerCase()}
   data-country={country.toLowerCase()}
   data-lat={lat}
